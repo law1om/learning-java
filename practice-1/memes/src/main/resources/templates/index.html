@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Студенты и реакции</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background: #f8f9fa; }
+        form { margin-bottom: 20px; background: white; padding: 15px; border-radius: 10px; }
+        img { width: 100px; border-radius: 10px; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+    </style>
+</head>
+<body>
+<h1>🎓 Студенты и реакции</h1>
+
+<h2>Добавить реакцию</h2>
+<form action="/reaction" method="post" enctype="multipart/form-data">
+    <input type="text" name="description" placeholder="Описание" required>
+    <input type="file" name="image" required>
+    <button type="submit">Добавить</button>
+</form>
+
+<h2>Добавить студента</h2>
+<form action="/student" method="post">
+    <input type="text" name="name" placeholder="Имя" required>
+    <input type="number" name="score" placeholder="Оценка" required>
+    <select name="reactionId" required>
+        <option value="">-- Выбери реакцию --</option>
+        <th:block th:each="r : ${reactions}">
+            <option th:value="${r.id}" th:text="${r.description}"></option>
+        </th:block>
+    </select>
+    <button type="submit">Добавить</button>
+</form>
+
+<h2>Список студентов</h2>
+<table>
+    <tr><th>Имя</th><th>Оценка</th><th>Реакция</th><th>Картинка</th><th>Удалить</th></tr>
+    <th:block th:each="s : ${students}">
+        <tr>
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.score}"></td>
+            <td th:text="${s.reaction.description}"></td>
+            <td><img th:src="@{/${s.reaction.imageUrl}}" alt="img"></td>
+            <td><a th:href="@{'/student/delete/' + ${s.id}}">❌</a></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>
