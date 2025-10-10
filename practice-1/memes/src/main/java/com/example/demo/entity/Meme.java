@@ -9,16 +9,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Student {
+public class Meme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String surname;
-    private int score;
-
-    @ManyToOne
-    @JoinColumn(name = "meme_id")
-    private Meme meme;
+    private int minScore;
+    private int maxScore;
+    private String description;
+    private String imageUrl;
 }

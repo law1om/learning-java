@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Случайный мем</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Случайный мем</h1>
+    <button id="randomBtn" class="btn">Показать мем</button>
+    <div id="memeBox" style="margin-top: 20px;"></div>
+    <a href="index.html" class="btn back">⬅ Назад</a>
+</div>
+
+<script>
+    document.getElementById('randomBtn').addEventListener('click', async () => {
+      const response = await fetch('/api/memes/random');
+      if (response.ok) {
+        const meme = await response.json();
+        const box = document.getElementById('memeBox');
+        box.innerHTML = `
+          <h3>${meme.description}</h3>
+          <img src="${meme.imageUrl}" style="max-width:100%;border-radius:10px;">
+        `;
+      } else {
+        alert("Ошибка загрузки мема!");
+      }
+    });
+</script>
+</body>
+</html>

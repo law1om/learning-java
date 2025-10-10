@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить студента</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Добавить студента</h1>
+    <form id="studentForm">
+        <input type="text" id="name" placeholder="Имя" required>
+        <input type="text" id="surname" placeholder="Фамилия" required>
+        <input type="number" id="score" placeholder="Баллы (0–30)" required>
+        <button class="btn" type="submit">Добавить</button>
+    </form>
+    <a href="index.html" class="btn back">⬅ Назад</a>
+</div>
+
+<script>
+    document.getElementById('studentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById('name').value,
+        surname: document.getElementById('surname').value,
+        score: parseInt(document.getElementById('score').value)
+      };
+
+      const response = await fetch('/api/students', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        alert('✅ Студент добавлен!');
+        e.target.reset();
+      } else {
+        alert('Ошибка при добавлении!');
+      }
+    });
+</script>
+</body>
+</html>

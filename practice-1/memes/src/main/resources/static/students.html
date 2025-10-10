@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Студенты</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Список студентов</h1>
+    <table id="studentsTable">
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Баллы</th>
+            <th>Мем</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <a href="index.html" class="btn back">⬅ Назад</a>
+</div>
+
+<script>
+    async function loadStudents() {
+      const res = await fetch('/api/students');
+      const students = await res.json();
+      const tbody = document.querySelector('#studentsTable tbody');
+      tbody.innerHTML = '';
+      students.forEach(s => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${s.name}</td>
+            <td>${s.surname}</td>
+            <td>${s.score}</td>
+            <td><img src="${s.meme?.imageUrl || ''}" alt="мем" width="80"></td>
+          </tr>
+        `;
+      });
+    }
+    loadStudents();
+</script>
+</body>
+</html>
